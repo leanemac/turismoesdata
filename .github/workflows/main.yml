@@ -36,3 +36,16 @@ jobs:
           tags: latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Convert notebook to HTML
+        run: |
+          jupyter nbconvert --to html Pasajeros-API.ipynb
+          mkdir -p visuals
+          mv Pasajeros-API.html visuals/
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.2
+        with:
+        branch: main
+        folder: ./visuals
+        clean: true
+        personal_token: ${{ secrets.GITHUB_TOKEN }}
+
