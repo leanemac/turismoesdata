@@ -1,0 +1,38 @@
+name: Generar Pasajeros-API cada 2 semanas
+
+on:
+  schedule:
+    - cron: '0 0 */2 * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Set up Python 3.9.12
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.12
+      - name: Install dependencies
+        run: |
+          pip install numpy pandas plotly matplotlib schedule requests
+      - name: Install Jupyter
+        run: |
+          pip install jupyter
+      - name: Run Jupyter notebook
+        run: |
+          jupyter nbconvert --to python Pasajeros-API.ipynb
+      - name: Commit changes
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Turismoesdata
+          message: "Update Pasajeros-API"
+      - name: Push changes
+        uses: EndBug/push@v2
+        with:
+          branch: main
+          force: true
+          tags: latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
