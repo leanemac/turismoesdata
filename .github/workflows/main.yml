@@ -28,10 +28,10 @@ jobs:
         with:
           author_name: Turismoesdata
           message: "Update Pasajeros-API"
+          branch: main
       - name: Push changes
         uses: EndBug/push@v2
         with:
-          branch: main
           force: true
           tags: latest
         env:
@@ -44,8 +44,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.2
         with:
-        branch: main
-        folder: ./visuals
-        clean: true
-        personal_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+          folder: ./visuals
+          clean: true
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
 
