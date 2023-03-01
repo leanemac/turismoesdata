@@ -41,6 +41,12 @@ jobs:
           jupyter nbconvert --to html Pasajeros-API.ipynb
           mkdir -p visuals
           mv Pasajeros-API.html visuals/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@4.1.2
         with:
@@ -48,4 +54,3 @@ jobs:
           folder: ./visuals
           clean: true
           personal_token: ${{ secrets.GITHUB_TOKEN }}
-
